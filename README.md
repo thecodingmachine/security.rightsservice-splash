@@ -4,8 +4,7 @@ Integrating the "rightsservice" with Splash
 This package is part of the Mouf PHP framework and contains the @RequiresRight annotation that integrates Splash with the RightsService.
 
 If you are using the Splash MVC framework, there is a special package to help you
-integrate the "rightsservice" with Splash. The package name is "security/rightsservice_splash".
-Please note this package does not apply if you are using Druplash.
+integrate the "rightsservice" with Splash or Druplash. The package name is "security/rightsservice_splash".
 
 This package provides a number of useful filters:
 
@@ -19,7 +18,7 @@ if he does not possess the specified right.
 /**
  * A sample default action that requires to have the "ACCESS_ADMIN_RIGHT" right.
  *
- * @Action
+ * @URL /admin
  * @RequiresRight(name="ACCESS_ADMIN_RIGHT")
  */
 public function defaultAction() { ... }
@@ -34,7 +33,7 @@ you can specify the instance of UserService to use in parameter of the annotatio
 /**
  * A sample default action that requires to have the "ACCESS_ADMIN_RIGHT" right.
  *
- * @Action
+ * @URL /admin
  * @RequiresRight(name="ACCESS_ADMIN_RIGHT",instance="myRightService")
  */
 public function defaultAction() { ... }
