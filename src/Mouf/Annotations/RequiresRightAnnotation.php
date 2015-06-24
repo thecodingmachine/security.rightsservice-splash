@@ -1,6 +1,8 @@
 <?php
 namespace Mouf\Annotations;
 
+use Mouf\MoufException;
+use Mouf\MoufInstanceNotFoundException;
 use Mouf\MoufManager;
 
 use Mouf\Mvc\Splash\Filters\AbstractFilter;
@@ -36,24 +38,24 @@ class RequiresRightAnnotation extends AbstractFilter
 		
 		$vars = strtok($tmpStr, "()");
 		if ($vars === false) {
-			throw new Exception('Error while reading the @RequiresRight annotation. At least, an annotation must be in the form: \'@RequiresRight (name="MY_RIGHT")\'. But the annotation encountered is: @RequiresRight '.$value);
+			throw new MoufException('Error while reading the @RequiresRight annotation. At least, an annotation must be in the form: \'@RequiresRight (name="MY_RIGHT")\'. But the annotation encountered is: @RequiresRight '.$value);
 		}
 		
 		// Ok, there are additional parameters if we start with a (.
 		$splitParamsStrings = explode(",", $vars);
 		$splitParamsArray = array();
 		foreach ($splitParamsStrings as $string) {
-			//$splitParamsStringsTrim[] = trim($string);
 			$equalsArr = explode('=', $string);
 			if (count($equalsArr) != 2) {
-				throw new Exception('Error while reading the @param annotation. Wrong syntax: @param '.$value);
+				throw new MoufException('Error while reading the @param annotation. Wrong syntax: @param '.$value);
 			}
 			$splitParamsArray[trim($equalsArr[0])] = trim($equalsArr[1]);
 		}
 
 		$this->name = trim($splitParamsArray['name'], '"\'');
-		if(isset($splitParamsArray['instance']))
-			$this->instanceName = $splitParamsArray['instance'];
+		if(isset($splitParamsArray['instance'])) {
+			$this->instanceName = trim($splitParamsArray['instance'], '"\'');
+        }
 	}
 	
 	/**
@@ -103,4 +105,3 @@ class RequiresRightAnnotation extends AbstractFilter
 		return $this->name;
 	}
 }
-?>
