@@ -72,20 +72,17 @@ class RequiresRightAnnotation extends AbstractFilter
 	 * Function to be called before the action.
 	 */
 	public function beforeAction() {
-		
-		if (!empty($this->instanceName)) {
-			$instanceName = $this->instanceName;
-		} else {
-			$instanceName = "rightsService"; 
-		}
+		$instanceName = $this->getInstanceName();
+
 		try {
 			$rightsService = MoufManager::getMoufManager()->getInstance($instanceName);
 		} catch (MoufInstanceNotFoundException $e) {
-			if (!empty($this->name))
-				throw new MoufException("Error using the @RequiresRight annotation: unable to find the RightsService instance named: ".$instanceName, null, $e);
-			else
-				throw new MoufException("Error using the @RequiresRight annotation: by default, this annotation requires a component named 'rightsService', and that extends the RightsServiceInterface interface.", null, $e);
-		}
+            if (!empty($this->name)) {
+                throw new MoufException("Error using the @RequiresRight annotation: unable to find the RightsService instance named: " . $instanceName, null, $e);
+            } else {
+                throw new MoufException("Error using the @RequiresRight annotation: by default, this annotation requires a component named 'rightsService', and that extends the RightsServiceInterface interface.", null, $e);
+            }
+        }
 		
 		$rightsService->redirectNotAuthorized($this->name);
 	}
@@ -104,4 +101,18 @@ class RequiresRightAnnotation extends AbstractFilter
 	public function getName() {
 		return $this->name;
 	}
+
+    /**
+     * Returns the instance name of the right service to be used.
+     * @return string
+     */
+    public function getInstanceName() {
+        if (!empty($this->instanceName)) {
+            $instanceName = $this->instanceName;
+        } else {
+            $instanceName = "rightsService";
+        }
+
+        return $instanceName;
+    }
 }
