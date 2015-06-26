@@ -21,7 +21,7 @@ if he does not possess the specified right.
 public function index() { ... }
 ```
 
-The <b>@RequiresRight</b> annotation requires an instance of[RightsService](http://mouf-php.com/packages/mouf/security.rightsservice/README.md) to exist. The
+The <b>@RequiresRight</b> annotation requires an instance of [RightsService](http://mouf-php.com/packages/mouf/security.rightsservice/README.md) to exist. The
 name of the instance must be "rightsService".
 If your RightsService instance is not named "rightsService" (or if you want to use several RightsService instances,
 you can specify the instance of UserService to use in parameter of the annotation:
