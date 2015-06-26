@@ -1,12 +1,9 @@
 Integrating the "rightsservice" with Splash
 ===========================================
 
-This package is part of the Mouf PHP framework and contains the @RequiresRight annotation that integrates Splash with the RightsService.
+This package is part of the Mouf PHP framework and contains the @RequiresRight annotation that integrates the [Splash MVC framework](http://mouf-php.com/packages/mouf/mvc.splash/index.md) with the [RightsService](http://mouf-php.com/packages/mouf/security.rightsservice/README.md).
 
-If you are using the Splash MVC framework, there is a special package to help you
-integrate the "rightsservice" with Splash or Druplash. The package name is "security/rightsservice_splash".
-
-This package provides a number of useful filters:
+This package provides one useful filter:
 
 The <b>@RequiresRight</b> annotation
 ------------------------------------
@@ -21,10 +18,10 @@ if he does not possess the specified right.
  * @URL /admin
  * @RequiresRight(name="ACCESS_ADMIN_RIGHT")
  */
-public function defaultAction() { ... }
+public function index() { ... }
 ```
 
-The <b>@RequiresRight</b> annotation requires an instance of <a href="rightsservice_package.html">RightsService</a> to exist. The
+The <b>@RequiresRight</b> annotation requires an instance of[RightsService](http://mouf-php.com/packages/mouf/security.rightsservice/README.md) to exist. The
 name of the instance must be "rightsService".
 If your RightsService instance is not named "rightsService" (or if you want to use several RightsService instances,
 you can specify the instance of UserService to use in parameter of the annotation:
@@ -36,5 +33,5 @@ you can specify the instance of UserService to use in parameter of the annotatio
  * @URL /admin
  * @RequiresRight(name="ACCESS_ADMIN_RIGHT",instance="myRightService")
  */
-public function defaultAction() { ... }
+public function index() { ... }
 ```
