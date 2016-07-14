@@ -68,7 +68,7 @@ class Right implements RightAnnotationInterface
     {
         $middlewareName = $container->get($this->middlewareName);
 
-        $response = $middlewareName($request, $response, $next, $container);
+        $response = $middlewareName($request, $response, $next, $container, $this);
 
         return $response;
     }
