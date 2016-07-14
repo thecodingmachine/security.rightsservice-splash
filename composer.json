@@ -23,5 +23,15 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "extra" : {
+        "mouf" : {
+            "install" : [{
+                "type" : "class",
+                "class" : "Mouf\\Security\\ForbiddenMiddlewareInstaller"
+            }
+            ]
+        }
+    }
+
 }

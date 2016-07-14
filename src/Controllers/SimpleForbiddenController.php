@@ -3,8 +3,10 @@
 
 namespace Mouf\Security\Controllers;
 
+use Mouf\Html\HtmlElement\HtmlBlock;
 use Mouf\Html\Template\TemplateInterface;
 use Mouf\Mvc\Splash\HtmlResponse;
+use Mouf\Security\Html\SimpleForbiddenView;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\Response\JsonResponse;
