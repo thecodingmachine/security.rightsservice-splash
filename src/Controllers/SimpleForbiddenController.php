@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Mouf\Security\Controllers;
 
 use Mouf\Html\HtmlElement\HtmlBlock;
@@ -13,7 +12,7 @@ use Zend\Diactoros\Response\JsonResponse;
 
 /**
  * A very very simple controller displaying a simple 403 page.
- * Note: this is not a 401 page (i.e.: it is not an authentication problem, it is an authorization problem)
+ * Note: this is not a 401 page (i.e.: it is not an authentication problem, it is an authorization problem).
  */
 class SimpleForbiddenController implements ForbiddenController
 {
@@ -39,8 +38,8 @@ class SimpleForbiddenController implements ForbiddenController
     private $contentBlock;
 
     /**
-     * @param TemplateInterface $template
-     * @param HtmlBlock $contentBlock
+     * @param TemplateInterface   $template
+     * @param HtmlBlock           $contentBlock
      * @param SimpleForbiddenView $simpleForbiddenView
      */
     public function __construct(TemplateInterface $template, HtmlBlock $contentBlock, SimpleForbiddenView $simpleForbiddenView)
@@ -61,7 +60,6 @@ class SimpleForbiddenController implements ForbiddenController
         if (is_array($acceptType) && count($acceptType) > 0 && strpos($acceptType[0], 'json') !== false) {
             return new JsonResponse(['error' => ['message' => 'Access forbidden', 'type' => 'access_forbidden']], 403);
         }
-
 
         $this->contentBlock->addHtmlElement($this->simpleForbiddenView);
 

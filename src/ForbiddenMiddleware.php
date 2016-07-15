@@ -3,8 +3,6 @@
 namespace Mouf\Security;
 
 use Interop\Container\ContainerInterface;
-use Mouf\Html\HtmlElement\HtmlBlock;
-use Mouf\Html\Template\TemplateInterface;
 use Mouf\Security\Controllers\ForbiddenController;
 use Mouf\Security\Controllers\LoginController;
 use Mouf\Security\RightsService\RightsServiceInterface;
@@ -35,11 +33,10 @@ class ForbiddenMiddleware
     private $forbiddenController;
 
     /**
-     *
-     * @param RightsServiceInterface $rightsService
-     * @param ForbiddenController $forbiddenController
+     * @param RightsServiceInterface    $rightsService
+     * @param ForbiddenController       $forbiddenController
      * @param UserServiceInterface|null $userService
-     * @param LoginController|null $loginController
+     * @param LoginController|null      $loginController
      */
     public function __construct(RightsServiceInterface $rightsService, ForbiddenController $forbiddenController, UserServiceInterface $userService = null, LoginController $loginController = null)
     {
@@ -59,7 +56,6 @@ class ForbiddenMiddleware
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next, ContainerInterface $container, RightAnnotationInterface $right)
     {
-
 
         // Do we have the right?
         if (!$right->isAllowed($this->rightsService)) {

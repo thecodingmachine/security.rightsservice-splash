@@ -45,6 +45,7 @@ class Right implements RightAnnotationInterface
      * Logged constructor.
      *
      * @param array $values
+     *
      * @throws \BadMethodCallException
      */
     public function __construct(array $values)
@@ -74,8 +75,8 @@ class Right implements RightAnnotationInterface
     }
 
     /**
-     *
      * @param RightsServiceInterface $rightsService
+     *
      * @return bool
      */
     public function isAllowed(RightsServiceInterface $rightsService) : bool

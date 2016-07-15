@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Mouf\Security;
-
 
 use Mouf\Security\RightsService\RightsServiceInterface;
 
@@ -12,8 +10,8 @@ use Mouf\Security\RightsService\RightsServiceInterface;
 interface RightAnnotationInterface
 {
     /**
-     *
      * @param RightsServiceInterface $rightsService
+     *
      * @return bool
      */
     public function isAllowed(RightsServiceInterface $rightsService) : bool;

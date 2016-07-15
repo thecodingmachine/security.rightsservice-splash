@@ -34,6 +34,7 @@ class ForbiddenMiddlewareProvider implements ServiceProvider
             ForbiddenMiddleware::class => function (ContainerInterface $container) {
                 $userService = $container->has(UserServiceInterface::class) ? $container->get(UserServiceInterface::class) : null;
                 $loginController = $container->has(LoginController::class) ? $container->get(LoginController::class) : null;
+
                 return new ForbiddenMiddleware($container->get(RightsServiceInterface::class), $container->get(ForbiddenController::class), $userService, $loginController);
             },
         ];
