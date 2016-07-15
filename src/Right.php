@@ -25,7 +25,10 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  *
  * @Annotation
+ * @Target({"METHOD","CLASS","ANNOTATION"})
  * @Attributes({
+ *   @Attribute("name", type = "string"),
+ *   @Attribute("right", type = "Mouf\Security\RightAnnotationInterface"),
  *   @Attribute("middlewareName", type = "string"),
  * })
  */
@@ -50,11 +53,13 @@ class Right implements RightAnnotationInterface
      */
     public function __construct(array $values)
     {
+        //TODO: allow other rights here.
+
         $this->middlewareName = $values['middlewareName'] ?? ForbiddenMiddleware::class;
-        if (!isset($values['value']) && !isset($values['name'])) {
-            throw new \BadMethodCallException('The @Right annotation must be passed a right name. For instance: "@Right(\'my_right\')"');
+        if (!isset($values['value']) && !isset($values['name']) && !isset($values['right'])) {
+            throw new \BadMethodCallException('The @Right annotation must be passed a right name or another right annotation. For instance: "@Right(\'my_right\')"');
         }
-        $this->name = $values['value'] ?? $values['name'];
+        $this->name = $values['value'] ?? $values['name'] ?? $values['right'];
     }
 
     /**
@@ -81,6 +86,10 @@ class Right implements RightAnnotationInterface
      */
     public function isAllowed(RightsServiceInterface $rightsService) : bool
     {
-        return $rightsService->isAllowed($this->name);
+        if ($this->name instanceof RightAnnotationInterface) {
+            return $this->name->isAllowed($rightsService);
+        } else {
+            return $rightsService->isAllowed($this->name);
+        }
     }
 }
