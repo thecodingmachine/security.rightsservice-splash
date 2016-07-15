@@ -2,10 +2,7 @@
 
 namespace Mouf\Security;
 
-use Interop\Container\ContainerInterface;
 use Mouf\Security\RightsService\RightsServiceInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * The @AndRight filter can be used to check that a user has several rights at once.
@@ -28,7 +25,6 @@ class AndRight implements RightAnnotationInterface
      * @var RightAnnotationInterface[]
      */
     protected $rights;
-
 
     /**
      * Logged constructor.
@@ -54,6 +50,7 @@ class AndRight implements RightAnnotationInterface
                 return false;
             }
         }
+
         return true;
     }
 }

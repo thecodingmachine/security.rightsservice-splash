@@ -2,10 +2,7 @@
 
 namespace Mouf\Security;
 
-use Interop\Container\ContainerInterface;
 use Mouf\Security\RightsService\RightsServiceInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * The @OrRight filter can be used to check that a user has one right amongst a list of required rights.
@@ -28,7 +25,6 @@ class OrRight implements RightAnnotationInterface
      * @var RightAnnotationInterface[]
      */
     protected $rights;
-
 
     /**
      * Logged constructor.
@@ -54,6 +50,7 @@ class OrRight implements RightAnnotationInterface
                 return true;
             }
         }
+
         return false;
     }
 }
