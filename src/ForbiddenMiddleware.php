@@ -62,7 +62,7 @@ class ForbiddenMiddleware
             // If we are not logged, try a 401, otherwise, let's go 403.
             $isLogged = ($this->userService !== null) ? $this->userService->isLogged() : true;
             if (!$isLogged && $this->loginController !== null) {
-                return $this->loginController->loginPage(null, $request->getUri());
+                return $this->loginController->loginPage($request, $request->getUri());
             } else {
                 return $this->forbiddenController->forbiddenPage($request);
             }
