@@ -35,10 +35,6 @@ class ForbiddenMiddleware implements ForbiddenMiddlewareInterface
      */
     private $forbiddenController;
 
-    /**
-     * @var RightAnnotationInterface
-     */
-    private $right;
 
     /**
      * @param RightsServiceInterface    $rightsService
