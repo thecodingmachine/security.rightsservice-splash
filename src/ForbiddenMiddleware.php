@@ -5,12 +5,15 @@ namespace Mouf\Security;
 use Interop\Container\ContainerInterface;
 use Mouf\Security\Controllers\ForbiddenController;
 use Mouf\Security\Controllers\LoginController;
+use Mouf\Security\RightsService\RightInterface;
 use Mouf\Security\RightsService\RightsServiceInterface;
 use Mouf\Security\UserService\UserServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class ForbiddenMiddleware
+class ForbiddenMiddleware implements ForbiddenMiddlewareInterface
 {
     /**
      * @var UserServiceInterface
@@ -31,6 +34,11 @@ class ForbiddenMiddleware
      * @var ForbiddenController
      */
     private $forbiddenController;
+
+    /**
+     * @var RightAnnotationInterface
+     */
+    private $right;
 
     /**
      * @param RightsServiceInterface    $rightsService
@@ -54,11 +62,11 @@ class ForbiddenMiddleware
      *
      * @return ResponseInterface
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next, ContainerInterface $container, RightAnnotationInterface $right)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler, RightAnnotationInterface $rightAnnotation) : ResponseInterface
     {
 
         // Do we have the right?
-        if (!$right->isAllowed($this->rightsService)) {
+        if (!$rightAnnotation->isAllowed($this->rightsService)) {
             // If we are not logged, try a 401, otherwise, let's go 403.
             $isLogged = ($this->userService !== null) ? $this->userService->isLogged() : true;
             if (!$isLogged && $this->loginController !== null) {
@@ -68,8 +76,7 @@ class ForbiddenMiddleware
             }
         }
 
-        $response = $next($request, $response, $next);
-
-        return $response;
+        return $handler->handle($request);
     }
+
 }
