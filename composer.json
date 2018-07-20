@@ -15,8 +15,8 @@
     "require": {
     	"php": ">=7.0.0",
         "mouf/security.rightsservice": "^2.0",
-        "mouf/mvc.splash-common": "^8.0",
-        "mouf/security.simplelogincontroller": "^5.0"
+        "mouf/mvc.splash-common": "^10.0",
+        "mouf/security.simplelogincontroller": "^6.0"
     },
     "autoload": {
         "psr-4": {

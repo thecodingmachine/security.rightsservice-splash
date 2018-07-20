@@ -2,10 +2,13 @@
 
 namespace Mouf\Security;
 
-use Interop\Container\ContainerInterface;
 use Mouf\Security\RightsService\RightsServiceInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use TheCodingMachine\Splash\Filters\FilterInterface;
 
 /**
  * The @Right filter should be used to check whether a user has
@@ -32,7 +35,7 @@ use Psr\Http\Message\ServerRequestInterface;
  *   @Attribute("middlewareName", type = "string"),
  * })
  */
-class Right implements RightAnnotationInterface
+class Right implements FilterInterface, RightAnnotationInterface
 {
     /**
      * @var string
@@ -53,8 +56,6 @@ class Right implements RightAnnotationInterface
      */
     public function __construct(array $values)
     {
-        //TODO: allow other rights here.
-
         $this->middlewareName = $values['middlewareName'] ?? ForbiddenMiddleware::class;
         if (!isset($values['value']) && !isset($values['name']) && !isset($values['right'])) {
             throw new \BadMethodCallException('The @Right annotation must be passed a right name or another right annotation. For instance: "@Right(\'my_right\')"');
@@ -62,21 +63,11 @@ class Right implements RightAnnotationInterface
         $this->name = $values['value'] ?? $values['name'] ?? $values['right'];
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @param ResponseInterface      $response
-     * @param callable               $next
-     * @param ContainerInterface     $container
-     *
-     * @return ResponseInterface
-     */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next, ContainerInterface $container)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler, ContainerInterface $container): ResponseInterface
     {
-        $middlewareName = $container->get($this->middlewareName);
-
-        $response = $middlewareName($request, $response, $next, $container, $this);
-
-        return $response;
+        /** @var ForbiddenMiddlewareInterface $middleware */
+        $middleware = $container->get($this->middlewareName);
+        return $middleware->process($request, $handler, $this);
     }
 
     /**
