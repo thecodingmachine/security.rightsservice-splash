@@ -66,9 +66,17 @@ class ForbiddenMiddleware implements ForbiddenMiddlewareInterface
             // If we are not logged, try a 401, otherwise, let's go 403.
             $isLogged = ($this->userService !== null) ? $this->userService->isLogged() : true;
             if (!$isLogged && $this->loginController !== null) {
-                return $this->loginController->loginPage($request, $request->getUri());
+                $response = $this->loginController->loginPage($request);
+                if($response->getStatusCode() === 200) {
+                    $response = $response->withStatus(401);
+                }
+                return $response;
             } else {
-                return $this->forbiddenController->forbiddenPage($request);
+                $response = $this->forbiddenController->forbiddenPage($request);
+                if($response->getStatusCode() === 200) {
+                    $response = $response->withStatus(403);
+                }
+                return $response;
             }
         }
 
