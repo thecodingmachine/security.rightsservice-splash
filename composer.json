@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-    	"php": ">=7.0.0",
+    	"php": "^8.0",
         "mouf/security.rightsservice": "^2.0",
         "mouf/mvc.splash-common": "^10.0",
         "mouf/security.simplelogincontroller": "^6.0"
@@ -33,6 +33,12 @@
             }
             ]
         }
+    },
+    "config": {
+        "allow-plugins": {
+            "mindplay/composer-locator": true,
+            "mouf/mouf-installer": true,
+            "laminas/laminas-dependency-plugin": true
+        }
     }
-
 }
