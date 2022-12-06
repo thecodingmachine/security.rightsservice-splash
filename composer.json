@@ -14,7 +14,7 @@
     ],
     "require": {
     	"php": "^8.0",
-        "mouf/security.rightsservice": "^2.0",
+        "mouf/security.rightsservice": "^3.0",
         "mouf/mvc.splash-common": "^10.0",
         "mouf/security.simplelogincontroller": "^6.0"
     },
